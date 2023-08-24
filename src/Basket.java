@@ -8,7 +8,7 @@ public class Basket implements BasketInterface {
         items = new ArrayList<>();
         quantities = new ArrayList<>();
     }
-
+    // CHANGE RETURN CHANGE RETURN
     public int itemIndex(String itemName) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getInventoryTableRow().getColumnOne().equalsIgnoreCase(itemName)) {

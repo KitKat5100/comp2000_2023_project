@@ -41,6 +41,7 @@ public class Inventory {
      * @param itemName
      * @return An Item matching the `itemName`
      */
+    // CHANGE RETURN
     public ItemInterface removeOne(String itemName) {   
         int removeFromIdx = indexOfItemByName(itemName);
         if (removeFromIdx == -1) {
@@ -54,6 +55,7 @@ public class Inventory {
      * Find the index of an item by name.
      * @param itemName
      */
+    // CHANGE RETURN CHANGE RETURN CHANGE RETURN
     private int indexOfItemByName(String itemName) {
         for (int i = 0; i < stock.size(); i++) {
             ItemInterface cur = stock.get(i);

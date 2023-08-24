@@ -1,6 +1,6 @@
 public class Seller {
-    private String name;
-    private Inventory inventory;
+    public String name;
+    public Inventory inventory;
 
     public Seller(String storeName, Inventory startingInventory) {
         name = storeName;
