@@ -1,19 +1,11 @@
-public class Tomato implements ItemInterface {
-    int expiry;
-    String description;
+//Summary:
+//Added a field which holds an Item. All interface implementation and methods have been moved there.
+//Check explanation in Item.java for more details.
 
-    public Tomato(int expiry,String desc) {
-        this.expiry = expiry;
-        this.description = desc;
-    }
+public class Tomato {
+    Item itemDetails;
 
-    @Override
-    public InventoryTableRow getInventoryTableRow() {
-        return new InventoryTableRow("Tomato", description, "15.0", expiry + "");
-    }
-
-    @Override
-    public CartTableRow getCartRow(String column3) {
-        return new CartTableRow("Tomato", "15.0", column3);
+    public Tomato(Item itemDetails) {
+        this.itemDetails = itemDetails;
     }
 }

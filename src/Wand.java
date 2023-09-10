@@ -1,17 +1,10 @@
-public class Wand implements ItemInterface {
-    int expiry;
+//Summary:
+//Added a field which holds an Item. All interface implementation and methods have been moved there.
+//Check explanation in Item.java for more details.
+public class Wand{
+    Item itemDetails;
 
-    public Wand(int expiry) {
-        this.expiry = expiry;   //expiry is set when object is made?
-    }
-
-    @Override
-    public InventoryTableRow getInventoryTableRow() {
-        return new InventoryTableRow("Wand", "A magic wand!", "100.0", expiry + "");
-    }
-
-    @Override
-    public CartTableRow getCartRow(String column3) {
-        return new CartTableRow("Wand", "100.0", column3);
+    public Wand(Item itemDetails) {
+        this.itemDetails = itemDetails;
     }
 }

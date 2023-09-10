@@ -1,6 +1,7 @@
 public class ItemReader {
     //Summary of Changes:
     //Made readStartingItem() return an error instead of the original -1 (or NULL? I forgot).
+    //Changed the way readStartingItem() initializes new items. Check Item.java and Tomato/Rock/etc. for more details
 
 	/**
 	 * itemData format: {ITEM NAME}, {DESCRIPTION}, {VALUE}, {EXPIRATION IF EXPIRES}
@@ -25,12 +26,15 @@ public class ItemReader {
         if (!expiry.isEmpty()) { //If expiry isnt empty, set expiration to that value.
             expiration = Integer.valueOf(expiry);
         }
-        if (name.equals("Tomato")) {  //creates a new tomato with the expiration (expiry)
-            return new Tomato(expiration, description);
+        if (name.equals("Tomato")) {
+            Tomato newTomato = new Tomato(new Item(expiration, description, name, value));
+            return newTomato.itemDetails;
         } else if (name.equals("Rock")) {
-            return new Rock(expiration);
+            Rock newRock = new Rock(new Item(expiration, description, name, value));
+            return newRock.itemDetails;
         } else if (name.equals("Wand")) {
-            return new Wand(expiration);
+            Wand newWand = new Wand(new Item(expiration, description, name, value));
+            return newWand.itemDetails;
         } else {
             throw new ClassNotFoundException("Bad Item read in ItemReader"); //if item is none of the pre-defined objects, send an error
         }

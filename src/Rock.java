@@ -1,17 +1,11 @@
-public class Rock implements ItemInterface {
-    int expiry;
+//Summary:
+//Added a field which holds an Item. All interface implementation and methods have been moved there.
+//Check explanation in Item.java for more details.
 
-    public Rock(int expiry) {
-        this.expiry = expiry;
-    }
+public class Rock {
+    Item itemDetails;
 
-    @Override
-    public InventoryTableRow getInventoryTableRow() {
-        return new InventoryTableRow("Rock", "Rock :D", "5.0", expiry + "");
-    }
-
-    @Override
-    public CartTableRow getCartRow(String column3) {
-        return new CartTableRow("Rock", "5.0", column3);
+    public Rock(Item itemDetails) {
+        this.itemDetails = itemDetails;
     }
 }
