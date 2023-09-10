@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+//Summary of what I did
+// I made the Player extend the Seller class. Since player had a lot of similar methods as seller, I can get rid of the code reduncancy there
+//Specified buy() and sell() to override the corresponding methods from Seller
+//sell() can now throw an ItemNotFoundException. Which originates in indexOfItemByName() in Inventory.java and is handled by processTransaction() in Basket.java
 public class Player extends Seller{
     private double money;
     private Basket shoppingBasket;
@@ -34,13 +38,10 @@ public class Player extends Seller{
      * @param itemName
      */
     @Override
-    public ItemInterface sell(String itemName) { //CHANGE RETURN
+    public ItemInterface sell(String itemName) throws ItemNotFoundException {
         ItemInterface i = removeItem(itemName);
-        if (i != null) {
-            money += Double.valueOf(i.getInventoryTableRow().getColumnThree().trim());
-            return i;
-        }
-        return null;
+        money += Double.valueOf(i.getInventoryTableRow().getColumnThree().trim());
+        return i;
     }
 
     public Basket getShoppingBasket() {

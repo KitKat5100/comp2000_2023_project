@@ -1,3 +1,7 @@
+//Summary of changes:
+//sell() and removeItem() can now throw a ItemNotFoundException. This exception will originate from indexOfItemByName() in Inventory.java
+//These exception will be thrown up the call stack until they are handled by processTransaction() in Basket.java
+
 public class Seller {
     public String name;
     public Inventory inventory;
@@ -21,12 +25,9 @@ public class Seller {
      * @param itemName
      * @return The sold item.
      */
-    public ItemInterface sell(String itemName) {
+    public ItemInterface sell(String itemName) throws ItemNotFoundException {
         ItemInterface result = removeItem(itemName);
-        if (result != null) {
-            return result;
-        }
-        return null;
+        return result;
     }
 
     /**
@@ -42,8 +43,8 @@ public class Seller {
      * the `itemName` parameter.
      * @param itemName
      */
-    public ItemInterface removeItem(String itemName) {
-        return inventory.removeOne(itemName);
+    public ItemInterface removeItem(String itemName) throws ItemNotFoundException {
+            return inventory.removeOne(itemName);
     }
     
     public Inventory getInventory() {

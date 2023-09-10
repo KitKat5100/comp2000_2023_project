@@ -9,6 +9,9 @@
  * 
  */
 
+//Summary of Changes:
+//Changed readStartingItems to catch an error that I made readStartingItem() in ItemReader throw
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -99,7 +102,13 @@ public class Reader {
 
         for (int i = 1; i < data.length; i += 5) {
             for (int qty = Integer.valueOf(data[i].trim()); qty > 0; qty--) {
+                try {
                 items.add(ItemReader.readStartingItem(Arrays.copyOfRange(data, i + 1, i + 5)));
+                } 
+                catch (ClassNotFoundException e){
+                    System.err.println(e.getMessage()); //if item is none of the pre-defined objects, send an error
+                    System.exit(0);
+                }
             }
         }
 

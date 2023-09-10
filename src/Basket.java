@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+//Summary of changes
+//itemIndex throws a custom exception called ItemNotFoundException
+//Edited setItemQuantity, add, and remove to catch the new exception from itemIndex
+//Edited both processTransaction() methods to handle a ItemNotFoundException that is thrown all the way from Inventory.java
+
 public class Basket implements BasketInterface {
     ArrayList<ItemInterface> items;
     ArrayList<Integer> quantities;
@@ -8,14 +13,15 @@ public class Basket implements BasketInterface {
         items = new ArrayList<>();
         quantities = new ArrayList<>();
     }
-    // CHANGE RETURN CHANGE RETURN
-    public int itemIndex(String itemName) {
+    // Defined a new type of exception and made this method throw it
+
+    public int itemIndex(String itemName) throws ItemNotFoundException {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getInventoryTableRow().getColumnOne().equalsIgnoreCase(itemName)) {
                 return i;
             }
         }
-        return -1;
+        throw new ItemNotFoundException("Item does not exist in inventory");
     }
 
     public ArrayList<CartTableRow> getRowData() {
@@ -30,17 +36,20 @@ public class Basket implements BasketInterface {
 
     @Override
     public void setItemQuantity(String itemName, int qty) {
-        int index = itemIndex(itemName);
-        if (index != -1) {
+        try {
+            int index = itemIndex(itemName);
             quantities.set(index, qty);
+        }
+        catch (ItemNotFoundException e){
         }
     }
 
     public void add(ItemInterface item) {
+        try {
         int index = itemIndex(item.getInventoryTableRow().getColumnOne());
-        if (index != -1) {
             quantities.set(index, quantities.get(index) + 1);
-        } else {
+        }
+        catch (ItemNotFoundException e){
             items.add(item);
             quantities.add(1);
         }
@@ -48,11 +57,12 @@ public class Basket implements BasketInterface {
 
     @Override
     public void remove(String itemName) {
-        int index = itemIndex(itemName);
-
-        if (index != -1) {
+        try{
+            int index = itemIndex(itemName);
             items.remove(index);
             quantities.remove(index);
+        }
+        catch (ItemNotFoundException e){
         }
     }
 
@@ -63,12 +73,14 @@ public class Basket implements BasketInterface {
         // Remove/sell items from the `from` parameter
         for (int i = 0; i < items.size() && !rollback; i++) {
             for (int q = 0; q < quantities.get(i); q++) {
-                ItemInterface saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
-                if (saleItem == null) {
-                    rollback = true;
-                    break;  // Trigger transaction rollback
+                try {
+                    ItemInterface saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
+                    transactionItems.add(saleItem);
                 }
-                transactionItems.add(saleItem);
+                catch (ItemNotFoundException e) {
+                        rollback = true;
+                        break;  // Trigger transaction rollback
+                }
             }
         }
 
@@ -90,12 +102,14 @@ public class Basket implements BasketInterface {
         // Remove/sell items from the `from` parameter
         for (int i = 0; i < items.size() && !rollback; i++) {
             for (int q = 0; q < quantities.get(i); q++) {
-                ItemInterface saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
-                if (saleItem == null) {
+                try {
+                    ItemInterface saleItem = from.sell(items.get(i).getInventoryTableRow().getColumnOne());
+                    transactionItems.add(saleItem);
+                }
+                catch (ItemNotFoundException e) {
                     rollback = true;
                     break;  // Trigger transaction rollback
                 }
-                transactionItems.add(saleItem);
             }
         }
         if (rollback) {

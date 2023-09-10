@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-
+//Summary of changes
+//indexOfItemByName and removeOne can now throw an ItemNotFoundException
+//The origin of this exception will be from indexOfItemByName, and will get thrown up the call stack until it is handled in Basket.java
 public class Inventory {
     protected ArrayList<ItemInterface> stock;
 
@@ -41,13 +43,8 @@ public class Inventory {
      * @param itemName
      * @return An Item matching the `itemName`
      */
-    // CHANGE RETURN
-    public ItemInterface removeOne(String itemName) {   
+    public ItemInterface removeOne(String itemName) throws ItemNotFoundException{   
         int removeFromIdx = indexOfItemByName(itemName);
-        if (removeFromIdx == -1) {
-            return null;
-        }
-
         return stock.remove((int) removeFromIdx);
     }
 
@@ -55,8 +52,7 @@ public class Inventory {
      * Find the index of an item by name.
      * @param itemName
      */
-    // CHANGE RETURN CHANGE RETURN CHANGE RETURN
-    private int indexOfItemByName(String itemName) {
+    private int indexOfItemByName(String itemName) throws ItemNotFoundException{
         for (int i = 0; i < stock.size(); i++) {
             ItemInterface cur = stock.get(i);
             
@@ -64,7 +60,7 @@ public class Inventory {
                 return i;
             }
         }
-        return -1;
+        throw new ItemNotFoundException();
     }
 
 }
