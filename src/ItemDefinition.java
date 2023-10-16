@@ -7,15 +7,16 @@ public class ItemDefinition {
     private boolean isBaseItem;
     private Optional<Double> weight;
 
+    // This may be helpful for the compsite pattern to find the appropriate item definitions
+    //MOVED THIS UP
+    ItemDictionary dict = ItemDictionary.get();
+
     public ItemDefinition(String n, String desc, Optional<Double> weightIfBase, String[] components) {
         name = n;
         description = desc;
         componentNames = components;
         isBaseItem = weightIfBase.isPresent();
         weight = weightIfBase;
-
-        // This may be helpful for the compsite pattern to find the appropriate item definitions
-        ItemDictionary dict = ItemDictionary.get();
 
     }
 
@@ -26,8 +27,12 @@ public class ItemDefinition {
      */
     public Item create() {
         Item item = new Item(this);
-        // An ItemDefinition for a craftable item might follow a similar pattern
-        // to how a craftable/composite item looks.
+        for (String componentName : componentNames) {
+            Optional<ItemDefinition> componentDef = dict.defByName(componentName);
+            if(componentDef.isPresent()) {
+                item.add(componentDef.get().create());
+            }
+        }
         return item;
     }
 
@@ -40,6 +45,11 @@ public class ItemDefinition {
 
     public String getDescription() {
         return description;
+    }
+
+    public String[] getComponents()
+    {
+        return componentNames;
     }
 
     /**

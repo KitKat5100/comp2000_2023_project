@@ -71,12 +71,14 @@ public class Inventory {
         return Optional.empty();
     }
 
+    //CHANGE TO FIT STRATEGY PATTERN -------------------
     public void setSearch(String search) {
         // You may wish to adjust this to facilitate the task 1 strategy pattern
         searchBy = search;
     }
 
     /**
+     * CHANGE TO ACCOMODATE STRATEGY PATTERN --------------------------------------------------
      * Search for items using the current search criteria in the Inventory.
      * An instance copy is made, such that the items that the inventory is not
      * lost when removed from the resulting ArrayList.

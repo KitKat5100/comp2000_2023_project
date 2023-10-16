@@ -49,11 +49,23 @@ public class App {
         }));
     }
 
+    //CALL THE CRAFTING FUNCTION ----------------------------------------
     void setupCrafting(ItemCraftPage page, Player player) {
-        page.setCraftAction((def) -> System.out.println("Crafting not implemented"));
+        try {
+            page.setCraftAction((def) -> player.craft(def));
+        }
+        catch (Exception e) {
+            System.out.println("Error encountered while crafting");
+        }
     }
 
+    //CALL THE UN-CRAFTING FUNCTION ----------------------------------------
     void setupUncrafting(ProductPage page, Player player) {
-        page.setUncraftAction((item) -> System.out.println("Uncrafting not implemented"));
+        try {
+            page.setUncraftAction((item) -> player.uncraft(item));
+        }
+        catch (Exception e) {
+            System.out.println("Error encountered while uncrafting");
+        }
     }
 }

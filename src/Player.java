@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Optional;
 public class Player {
     private String name;
     private Inventory inventory;
@@ -38,12 +40,43 @@ public class Player {
         return carrying;
     }
 
+    public void craft(ItemDefinition def) throws ItemNotAvailableException {
+        Item item = def.create();
+
+        boolean hasAllItems = true;
+        for(ItemInterface component : item.getComponents()) {
+            if(inventory.qtyOf(component.getDefinition()) <= 0) {
+                hasAllItems = false;
+            }
+        }
+
+        if(hasAllItems) {
+            for(ItemInterface component: item.getComponents()) {
+                inventory.removeOne(component.getDefinition());
+            }
+            inventory.addOne(item);
+            System.out.println("Crafting successful!");
+        }
+        else {
+            System.out.println("Lacking components, crafting unsuccessful.");
+        }
+    }
+
+    public void uncraft(Item item) throws ItemNotAvailableException
+    {
+        for(ItemInterface component : item.getComponents()) {
+            inventory.addOne(component);
+        }
+        inventory.remove(item);
+    }
+
     public void store(ItemInterface item, Storage storage) throws ItemNotAvailableException {
         // Do we have the item we are trying to store
         if (!inventory.searchItems("").contains(item)) {
             throw new ItemNotAvailableException(item.getDefinition());
         }
         storage.store(inventory.remove(item));
+        System.out.println("Uncrafting successful!");
     }
 
     public void retrieve(ItemInterface item, Storage storage) throws ItemNotAvailableException, ExceedWeightCapacity {
