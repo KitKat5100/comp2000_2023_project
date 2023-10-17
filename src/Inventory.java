@@ -47,6 +47,7 @@ public class Inventory {
         return stock.remove(removeFromIdx.get().intValue());
     }
 
+    //CHANE? TO IMPLEMENT GETSTOCK?
     /**
      * Adds an Item instance to the inventories stock.
      * Sort is called using the current/existing sort strategy.

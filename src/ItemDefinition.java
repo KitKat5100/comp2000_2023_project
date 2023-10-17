@@ -6,9 +6,6 @@ public class ItemDefinition {
     private String[] componentNames;
     private boolean isBaseItem;
     private Optional<Double> weight;
-
-    // This may be helpful for the compsite pattern to find the appropriate item definitions
-    //MOVED THIS UP
     ItemDictionary dict = ItemDictionary.get();
 
     public ItemDefinition(String n, String desc, Optional<Double> weightIfBase, String[] components) {
@@ -17,7 +14,6 @@ public class ItemDefinition {
         componentNames = components;
         isBaseItem = weightIfBase.isPresent();
         weight = weightIfBase;
-
     }
 
     /**

@@ -1,4 +1,4 @@
-
+//Make the player a singleton?
 public class Player {
     private String name;
     private Inventory inventory;

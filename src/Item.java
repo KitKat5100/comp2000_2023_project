@@ -14,7 +14,6 @@ public class Item implements ItemInterface {
         definition = def;
     }
 
-    //ADDED
     public void add(ItemInterface component)
     {
         components.add(component);
@@ -26,7 +25,6 @@ public class Item implements ItemInterface {
         return weight;
     }
 
-    //ALSO ADDED THIS
     public double getCompositeWeight() {
         double weight = 0.0;
         for(ItemInterface component: components) {
@@ -35,7 +33,6 @@ public class Item implements ItemInterface {
         return weight;
     }
 
-    //ADDED THIS
     public ArrayList<ItemInterface> getComponents(){
         return components;
     }
