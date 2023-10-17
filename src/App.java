@@ -34,28 +34,27 @@ public class App {
     // Task 1: Defining what each button in the UI will do.
     void setupSearching(InventoryPage page) {
         page.addSearchByButton(new SearchByButton("All", () -> {
-            player.getInventory().setSearch("All");
-            player.getStorageView().setSearch("All");
+            player.getInventory().setSearch(new SearchAll());
+            player.getStorageView().setSearch(new SearchAll());
         }));
 
         page.addSearchByButton(new SearchByButton("Name", () -> {
-            player.getInventory().setSearch("Name");
-            player.getStorageView().setSearch("Name");
+            player.getInventory().setSearch(new SearchName());
+            player.getStorageView().setSearch(new SearchName());
         }));
 
         page.addSearchByButton(new SearchByButton("Description", () -> {
-            player.getInventory().setSearch("Description");
-            player.getStorageView().setSearch("Description");
+            player.getInventory().setSearch(new SearchDescription());
+            player.getStorageView().setSearch(new SearchDescription());
         }));
     }
 
     //CALL THE CRAFTING FUNCTION ----------------------------------------
     void setupCrafting(ItemCraftPage page, Player player) {
         try {
-            page.setCraftAction((def) -> player.craft(def));
+          page.setCraftAction((def) -> player.craft(def));
         }
         catch (Exception e) {
-            System.out.println("Error encountered while crafting");
         }
     }
 
@@ -65,7 +64,6 @@ public class App {
             page.setUncraftAction((item) -> player.uncraft(item));
         }
         catch (Exception e) {
-            System.out.println("Error encountered while uncrafting");
         }
     }
 }

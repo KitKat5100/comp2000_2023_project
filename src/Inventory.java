@@ -3,16 +3,16 @@ import java.util.Optional;
 
 public class Inventory {
     private ArrayList<ItemInterface> stock;
-    private String searchBy;
+    private SearchType searchType; //CHANGED ADDED, I REMOVED THE OLD VARIABLE
 
     public Inventory() {
         stock = new ArrayList<>();
-        searchBy = "All";
+        searchType = new SearchAll();
     }
 
     public Inventory(ArrayList<ItemInterface> startingStock) {
         stock = startingStock;
-        searchBy = "All";
+        searchType = new SearchAll();
     }
 
     /**
@@ -72,9 +72,8 @@ public class Inventory {
     }
 
     //CHANGE TO FIT STRATEGY PATTERN -------------------
-    public void setSearch(String search) {
-        // You may wish to adjust this to facilitate the task 1 strategy pattern
-        searchBy = search;
+    public void setSearch(SearchType newSearchType) {
+        searchType = newSearchType;
     }
 
     /**
@@ -86,35 +85,7 @@ public class Inventory {
      * @return a filtered instance copy of the items arraylist
      */
     public ArrayList<ItemInterface> searchItems(String searchTerm) {
-        String term = searchTerm.toLowerCase();
-        ArrayList<ItemInterface> result = new ArrayList<>(stock);  // ArrayList copy
-
-        if (searchBy.equals("All")) {
-            for (int i = 0; i < result.size(); i++) {
-                ItemInterface curItem = result.get(i);
-                if (!curItem.getName().contains(term) && !curItem.getDescription().contains(term)) {
-                    result.remove(i);
-                    i--;  // Go back to revisit current index on next run of loop
-                }
-            }
-        } else if (searchBy.equals("Name")) {
-            for (int i = 0; i < result.size(); i++) {
-                ItemInterface curItem = result.get(i);
-                if (!curItem.getName().contains(term)) {
-                    result.remove(i);
-                    i--;  // Go back to revisit current index on next run of loop
-                }
-            }
-        } else if (searchBy.equals("Description")) {
-            for (int i = 0; i < result.size(); i++) {
-                ItemInterface curItem = result.get(i);
-                if (!curItem.getDescription().contains(term)) {
-                    result.remove(i);
-                    i--;  // Go back to revisit current index on next run of loop
-                }
-            }
-        }
-        return result;
+        return searchType.searchItems(stock, searchTerm);
     }
 
     public int qtyOf(ItemDefinition def) {

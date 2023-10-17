@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Optional;
+
 public class Player {
     private String name;
     private Inventory inventory;
@@ -32,6 +31,7 @@ public class Player {
         return carryWeightCapacity;
     }
 
+    //COULD POSSIBLY FIX THIS?????
     public double getCurrentWeight() {
         double carrying = 0;
         for (ItemInterface item : getInventory().searchItems("")) {
@@ -68,6 +68,7 @@ public class Player {
             inventory.addOne(component);
         }
         inventory.remove(item);
+        System.out.println("Uncrafting successful!");
     }
 
     public void store(ItemInterface item, Storage storage) throws ItemNotAvailableException {
@@ -76,7 +77,6 @@ public class Player {
             throw new ItemNotAvailableException(item.getDefinition());
         }
         storage.store(inventory.remove(item));
-        System.out.println("Uncrafting successful!");
     }
 
     public void retrieve(ItemInterface item, Storage storage) throws ItemNotAvailableException, ExceedWeightCapacity {
